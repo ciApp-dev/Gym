@@ -10,6 +10,7 @@ import com.isai.gym.clases.BordesRedondos;
 import com.isai.gym.clases.OperacionesDB;
 import com.isai.gym.clases.Utilerias;
 import com.sun.awt.AWTUtilities;
+import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.Toolkit;
@@ -82,6 +83,11 @@ OperacionesDB operDB= new OperacionesDB();
 
         txtNombre.setColumns(10);
         txtNombre.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreKeyPressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -99,6 +105,11 @@ OperacionesDB operDB= new OperacionesDB();
 
         pssContra.setColumns(10);
         pssContra.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        pssContra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pssContraKeyPressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -185,22 +196,30 @@ OperacionesDB operDB= new OperacionesDB();
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         // TODO add your handling code here:
         
+        try{
         String [][] datosUsurio={{"nombreUsuario",txtNombre.getText().toUpperCase()},
                                  {"password",util.encriptacion(pssContra.getText())}};
         String [] datos=operDB.datosRowCondicionesAND("usuarios", datosUsurio);
         
         
+            
         if(datos[0]!=null){
+            lblMsg.setText("Bienvenido "+datos[1]+" "+datos[2]);
         String [] permisos=datos[5].split(",");
             Principal pri=new Principal(0);
            pri.show();
            pri.permisos(permisos);
            this.dispose();
+           
         }else{
             lblMsg.setText("Por favor verifique usuario o contraseña");
            lblMsg.setForeground(Color.decode(util.colorMal));
            txtNombre.setText("");
            pssContra.setText("");
+        }
+        }catch(Exception e){
+            lblMsg.setText("Contraseña o usario incorrecto...");
+            lblMsg.setForeground(Color.decode(util.colorMal));
         }
         
         
@@ -212,6 +231,21 @@ OperacionesDB operDB= new OperacionesDB();
            pssContra.setText("");
            System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void pssContraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pssContraKeyPressed
+        // TODO add your handling code here:
+        
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            btnIniciar.doClick();
+        }
+    }//GEN-LAST:event_pssContraKeyPressed
+
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            pssContra.requestFocus();
+        }
+    }//GEN-LAST:event_txtNombreKeyPressed
 
     /**
      * @param args the command line arguments

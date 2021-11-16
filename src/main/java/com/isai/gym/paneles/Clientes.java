@@ -11,6 +11,7 @@ import com.isai.gym.clases.OperacionesDB;
 import com.isai.gym.clases.Utilerias;
 import com.isai.gym.submenus.SubHuella;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.MatteBorder;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -276,6 +279,8 @@ public class Clientes extends javax.swing.JPanel implements Runnable{
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         tbPrincipalClientes.setBackground(new java.awt.Color(255, 255, 255));
+        tbPrincipalClientes.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        tbPrincipalClientes.setForeground(new java.awt.Color(0, 0, 0));
         tbPrincipalClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -289,6 +294,14 @@ public class Clientes extends javax.swing.JPanel implements Runnable{
         ));
         tbPrincipalClientes.setSelectionBackground(Color.decode(util.colorDark)
         );
+        tbPrincipalClientes.setSelectionBackground(Color.decode(util.colorSecundario));
+        tbPrincipalClientes.setSelectionForeground(Color.BLACK);
+
+        JTableHeader header=tbPrincipalClientes.getTableHeader();
+        header.setBackground(Color.decode(util.colorPrimario));
+        header.setForeground(Color.BLACK);
+        header.setFont((new Font("Tahoma", Font.PLAIN,19)));
+        header.setBorder(new MatteBorder(2,2,2,2, (Color)Color.black));
         tbPrincipalClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tbPrincipalClientesMousePressed(evt);

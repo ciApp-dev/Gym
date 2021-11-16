@@ -19,7 +19,7 @@ public class conexion {
     
     String url="jdbc:mysql://localhost/gimnasio";
     String user="root";
-    String pass="THESTROKES";
+    String pass="1234";
     Connection con=null;
            
     public conexion(){
